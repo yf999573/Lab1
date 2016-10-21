@@ -38,8 +38,9 @@ public class Test2 {
 		int Reflag = 1;
 		switch (op) {
 		case 0:
-			for (char x : ch)
+			for (char x : ch) {
 				System.out.print(x);
+			}
 			System.out.println();
 			break;
 		case 1:
@@ -58,7 +59,8 @@ public class Test2 {
 		for (int i = 0; i < len; i++) {
 			int x = ch[i];
 			if (flag == 0) {
-				if (x >= 48 && x <= 57 || x == 42 || x == 43 || x >= 97 && x <= 122) { // 输入为数字、小写字母或+，*符号
+				if (x >= 48 && x <= 57 || x == 42 || x == 43 || x >= 97 && x <= 122) {
+				// 输入为数字、小写字母或+，*符号
 					if (x >= 48 && x <= 57) { // 当前字符为数字时，下一位不为字母
 						if (i != len - 1) {
 							if (ch[i + 1] >= 97 && ch[i + 1] <= 122) {
@@ -66,7 +68,8 @@ public class Test2 {
 								return 1;
 							}
 						}
-					} else if (x >= 97 && x <= 122) {// 当前字符为字母时，下一位不为字母或数字
+					} else if (x >= 97 && x <= 122) {
+					// 当前字符为字母时，下一位不为字母或数字
 						if (i != len - 1) {
 
 							if (ch[i + 1] >= 97 && ch[i + 1] <= 122 || ch[i + 1] >= 48 && ch[i + 1] <= 57) {
@@ -74,10 +77,8 @@ public class Test2 {
 								return 1;
 							}
 						}
-					} else// 当前字符为*或+时，下一位不为*或+
-					{
-						if (i == 0 || i == len - 1) // 运算符在首位或末位
-						{
+					} else {// 当前字符为*或+时，下一位不为*或+
+						if (i == 0 || i == len - 1) {// 运算符在首位或末位
 							flag = 1;
 							return 1;
 						} else if (ch[i + 1] == 42 || ch[i + 1] == 43) {
@@ -94,8 +95,8 @@ public class Test2 {
 		return flag;
 	}
 
-	public static int substitute(char ch[]) // 赋值
-	{
+	public static int substitute(char ch[]) {// 赋值
+	
 		Scanner in = new Scanner(System.in);
 		String str = in.nextLine();
 		str = str + ' ';
@@ -114,8 +115,9 @@ public class Test2 {
 			for (int k = 0; k < ch.length; k++) {
 				if (ch[k] == str.charAt(count[m] + 1)) {
 					break;
-				} else
+				} else {
 					cont++;
+				}
 			}
 			if (cont == ch.length) {
 				System.out.println("Error,no variable!");
@@ -129,8 +131,9 @@ public class Test2 {
 					S.append(str.substring(count[m] + 3, count[m + 1]));
 					flag = 1;
 					break;
-				} else
+				} else {
 					continue;
+				}
 			}
 			if (flag == 0) {
 				S.append(ch[k]);
@@ -142,11 +145,11 @@ public class Test2 {
 	}
 
 	public static void simplify(String SS) { // 简化
-	
+
 		StringBuffer S_new = new StringBuffer();
 		String[] B = SS.split("\\+");
 		for (int i = 0; i < B.length; i++) {
-			String C[] = B[i].split("\\*");
+			String C [] = B[i].split("\\*");
 			int value = 1;
 			boolean flag = true;
 			StringBuffer SSS = new StringBuffer();
@@ -198,16 +201,17 @@ public class Test2 {
 		String str = in.nextLine();
 		String chnew;
 		StringBuffer Dered = new StringBuffer();
-		if (str.length() > 5)
+		if (str.length() > 5) {
 			System.out.println("Error, no variable");
-		else {
+		} else {
 			chnew = str.substring(4, 5);
 			int DerCont = 0;
 			for (int n = 0; n < DerStr.length(); n++) {
-				if (chnew.equals(DerStr.substring(n, n + 1)))
+				if (chnew.equals(DerStr.substring(n, n + 1))) {
 					break;
-				else
+				} else {
 					DerCont++;
+				}
 			}
 			if (DerCont == DerStr.length()) {
 				System.out.println("Error,no variable!");
