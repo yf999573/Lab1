@@ -4,15 +4,10 @@ import java.util.Scanner;
 //import javax.net.ssl.SSLContextSpi;
 //second change test
 //checkstyle:
-//'{'应该不换行，'}'应该换行
-//'+''='等符号前后应有空格
-//代码中的立即数应用常量存储
-//'('前不应有空格
-//单行if,else后加括号
-//else应跟在'}'后面
-//变量名不规范
+//除变量名以外的风格错误都以更改完毕
+//变量名的规范请自行修改
 public class Test2 {
-	public Test2() {
+	private Test2() {
 	}
 
 	public static void main(String[] args) {
@@ -20,21 +15,28 @@ public class Test2 {
 		Scanner in = new Scanner(System.in);
 		while (in.hasNextLine()) {
 			String str = in.nextLine();
-			char ch[] = str.toCharArray(); // 将字符串转化为字符串数组
+			char[] ch = str.toCharArray(); // 将字符串转化为字符串数组
 			String[] A = str.split("\\+");
 			int op = OutChar(ch);
 			int flag = expression(ch, op);
 			if (flag == 0) {
 				System.out.println("error!");
 			} else {
-				substitute(ch);
-				derivative(str);
+				if (in.hasNextLine()) {
+					String order = in.nextLine();
+					substitute(ch, order);
+				}
+				if (in.hasNextLine()) {
+					String order = in.nextLine();
+					derivative(str, order);
+				}
+
 			}
 		}
 		in.close();
 	}
 
-	public static int expression(char ch[], int op) {
+	public static int expression(char[] ch, int op) {
 		int Reflag = 1;
 		switch (op) {
 		case 0:
@@ -53,14 +55,14 @@ public class Test2 {
 		return Reflag;
 	}
 
-	public static int OutChar(char ch[]) {
+	public static int OutChar(char[] ch) {
 		int flag = 0;
 		int len = ch.length;
 		for (int i = 0; i < len; i++) {
 			int x = ch[i];
 			if (flag == 0) {
 				if (x >= 48 && x <= 57 || x == 42 || x == 43 || x >= 97 && x <= 122) {
-				// 输入为数字、小写字母或+，*符号
+					// 输入为数字、小写字母或+，*符号
 					if (x >= 48 && x <= 57) { // 当前字符为数字时，下一位不为字母
 						if (i != len - 1) {
 							if (ch[i + 1] >= 97 && ch[i + 1] <= 122) {
@@ -69,7 +71,7 @@ public class Test2 {
 							}
 						}
 					} else if (x >= 97 && x <= 122) {
-					// 当前字符为字母时，下一位不为字母或数字
+						// 当前字符为字母时，下一位不为字母或数字
 						if (i != len - 1) {
 
 							if (ch[i + 1] >= 97 && ch[i + 1] <= 122 || ch[i + 1] >= 48 && ch[i + 1] <= 57) {
@@ -77,8 +79,8 @@ public class Test2 {
 								return 1;
 							}
 						}
-					} else {// 当前字符为*或+时，下一位不为*或+
-						if (i == 0 || i == len - 1) {// 运算符在首位或末位
+					} else { // 当前字符为*或+时，下一位不为*或+
+						if (i == 0 || i == len - 1) { // 运算符在首位或末位
 							flag = 1;
 							return 1;
 						} else if (ch[i + 1] == 42 || ch[i + 1] == 43) {
@@ -95,14 +97,12 @@ public class Test2 {
 		return flag;
 	}
 
-	public static int substitute(char ch[]) {// 赋值
-	
-		Scanner in = new Scanner(System.in);
-		String str = in.nextLine();
+	public static int substitute(char[] ch, String str) { // 赋值
+
 		str = str + ' ';
 		int j = 0;
 		StringBuffer S = new StringBuffer();
-		int count[] = new int[26];
+		int[] count = new int[26];
 		for (int i = 9; i < str.length(); i++) {
 			if (str.charAt(i) == ' ') {
 				count[j] = i;
@@ -149,7 +149,7 @@ public class Test2 {
 		StringBuffer S_new = new StringBuffer();
 		String[] B = SS.split("\\+");
 		for (int i = 0; i < B.length; i++) {
-			String C [] = B[i].split("\\*");
+			String[] C = B[i].split("\\*");
 			int value = 1;
 			boolean flag = true;
 			StringBuffer SSS = new StringBuffer();
@@ -196,9 +196,7 @@ public class Test2 {
 		System.out.println(DerStr);
 	}
 
-	public static int derivative(String DerStr) {// 求导
-		Scanner in = new Scanner(System.in);
-		String str = in.nextLine();
+	public static int derivative(String DerStr, String str) { // 求导
 		String chnew;
 		StringBuffer Dered = new StringBuffer();
 		if (str.length() > 5) {
@@ -217,9 +215,9 @@ public class Test2 {
 				System.out.println("Error,no variable!");
 				return 0;
 			}
-			String DerStr_Cut[] = DerStr.split("\\+");
+			String[] DerStr_Cut = DerStr.split("\\+");
 			for (int i = 0; i < DerStr_Cut.length; i++) {
-				String B[] = DerStr_Cut[i].split("\\*");
+				String[] B = DerStr_Cut[i].split("\\*");
 				int count = 0;
 				for (int j = 0; j < B.length; j++) {
 					if (chnew.equals(B[j])) {
